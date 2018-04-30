@@ -43,12 +43,13 @@ const result = excelToJson({
 });
 
 result.Accounts.forEach(account => {
+    account.uid = new String(account.uid);
     account.emailVerified = account.emailVerified == "TRUE" ? true : false;
     account.disabled = account.disabled == "TRUE" ? true : false;
 })
 
-// result.Teams.forEach(team => { team.uid = team.id })
+result.Teams.forEach(team => { team.id = team.id.replace(/\s/g,'-'); team.name = team.name.replace(/\s/g,'-') })
 
-result.Users.forEach(user => { user.isManager = user.isManager == "TRUE" ? true : false })
+result.Users.forEach(user => { user.empId = new String(user.empId); user.team = user.team.replace(/\s/g,'-'); user.isManager = user.isManager == "TRUE" ? true : false; })
 
 console.log(JSON.stringify(result));
